@@ -13,7 +13,11 @@ impl AdventProblem for Day2 {
     }
 
     fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
-        Ok(1)
+        let total = lines
+            .iter()
+            .map(|s| Game::try_from(s.as_str()).unwrap())
+            .fold(0, |t, g| t + g.power());
+        Ok(total)
     }
 }
 
@@ -49,6 +53,20 @@ impl TryFrom<&str> for Game {
 impl Game {
     fn is_valid(&self) -> bool {
         self.samples.iter().all(|s| s.is_valid())
+    }
+
+    fn power(&self) -> u32 {
+        let mut red = 0;
+        let mut green = 0;
+        let mut blue = 0;
+
+        for sample in &self.samples {
+            red = std::cmp::max(sample.red, red);
+            green = std::cmp::max(sample.green, green);
+            blue = std::cmp::max(sample.blue, blue);
+        }
+
+        red * green * blue
     }
 }
 
