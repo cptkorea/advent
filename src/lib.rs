@@ -1,3 +1,4 @@
+use std::borrow::Cow;
 use std::fs::File;
 use std::{io, io::BufRead};
 use thiserror::Error;
@@ -22,7 +23,7 @@ pub enum AdventError {
     #[error("i/o error")]
     IoError(#[from] io::Error),
     #[error("{0}")]
-    InputParseError(String),
+    InputParseError(Cow<'static, str>),
 }
 
 fn read_input(year: u32, date: u8) -> Result<Vec<String>, io::Error> {
