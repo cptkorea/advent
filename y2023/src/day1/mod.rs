@@ -1,119 +1,93 @@
 use crate::{AdventError, AdventProblem};
 
+const NUMBERS: [&str; 9] = [
+    "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+];
+
 pub struct Day1;
 
 impl AdventProblem for Day1 {
     fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
-        let total = lines
-            .iter()
-            .map(|s| first_last_digit(s))
-            .fold(0, |x, y| x + y.0 * 10 + y.1);
+        let total = lines.iter().map(|s| calibration_value(s)).sum();
         Ok(total)
     }
 
     fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
-        let total = lines
-            .iter()
-            .map(|s| alphabetic_first_last_digit(s))
-            .fold(0, |x, y| x + y.0 * 10 + y.1);
+        let total = lines.iter().map(|s| alpha_calibration_value(s)).sum();
         Ok(total)
     }
 }
 
-fn first_last_digit(s: &str) -> (u32, u32) {
-    let (mut first, mut last) = (0, 0);
+fn calibration_value(s: &str) -> u32 {
+    let mut calibration_value = 0;
 
     for c in s.chars() {
         if let Some(d) = c.to_digit(10) {
-            first = d;
+            calibration_value += 10 * d;
+            break;
         }
     }
 
     for c in s.chars().rev() {
         if let Some(d) = c.to_digit(10) {
-            last = d;
+            calibration_value += d;
+            break;
         }
     }
-
-    (first, last)
+    println!("forward s={}, calibration={}", s, calibration_value);
+    calibration_value
 }
 
-fn alphabetic_first_last_digit(s: &str) -> (u32, u32) {
-    let (mut first, mut last) = (0, 0);
+fn alpha_calibration_value(s: &str) -> u32 {
+    let mut calibration_value = 0;
 
-    let n = s.len();
-    let chars = s.chars().collect::<Vec<_>>();
-
-    for (i, c) in chars.iter().enumerate() {
+    for (i, c) in s.chars().enumerate() {
         if let Some(d) = c.to_digit(10) {
-            first = d;
+            calibration_value += 10 * d;
             break;
-        } else if let Some(d) = match_digit(&s[i..]) {
-            first = d;
+        }
+
+        if let Some(d) = find_digit_from_start(s, i) {
+            calibration_value += 10 * d;
             break;
         }
     }
 
-    for (i, c) in chars.iter().rev().enumerate() {
+    for (j, c) in s.chars().rev().enumerate() {
         if let Some(d) = c.to_digit(10) {
-            last = d;
+            calibration_value += d;
             break;
-        } else if let Some(d) = match_digit(&s[n - i - 1..]) {
-            last = d;
+        }
+
+        if let Some(d) = find_digit_from_end(s, s.len() - j) {
+            calibration_value += d;
             break;
         }
     }
 
-    (first, last)
+    calibration_value
 }
 
-fn match_digit(s: &str) -> Option<u32> {
-    let n = s.len();
-    match &s[0..1] {
-        "o" => {
-            if n >= 3 && &s[..3] == "one" {
-                return Some(1);
-            }
+/// searches s ending at index j for an alphabetic number digit match
+fn find_digit_from_start(s: &str, i: usize) -> Option<u32> {
+    for (v, &num) in NUMBERS.iter().enumerate() {
+        // SAFETY: Take max with 0 first to avoid unsigned integer underflow
+        let j = std::cmp::min(i + num.len(), s.len());
+        if &s[i..j] == num {
+            return Some(v as u32 + 1);
         }
-        "t" => {
-            if n >= 3 && &s[..3] == "two" {
-                return Some(2);
-            }
-
-            if n >= 5 && &s[..5] == "three" {
-                return Some(3);
-            }
-        }
-        "f" => {
-            if n >= 4 && &s[..4] == "four" {
-                return Some(4);
-            }
-
-            if n >= 4 && &s[..4] == "five" {
-                return Some(5);
-            }
-        }
-        "s" => {
-            if n >= 3 && &s[..3] == "six" {
-                return Some(6);
-            }
-
-            if n >= 5 && &s[..5] == "seven" {
-                return Some(7);
-            }
-        }
-        "e" => {
-            if n >= 5 && &s[..5] == "eight" {
-                return Some(8);
-            }
-        }
-        "n" => {
-            if n >= 4 && &s[..4] == "nine" {
-                return Some(9);
-            }
-        }
-        _ => (),
     }
+    None
+}
 
+/// searches s ending at index j for an alphabetic number digit match
+fn find_digit_from_end(s: &str, j: usize) -> Option<u32> {
+    for (v, &num) in NUMBERS.iter().enumerate() {
+        // SAFETY: Take max with 0 first to avoid unsigned integer underflow
+        let i = j.checked_sub(num.len()).unwrap_or(0);
+        if &s[i..j] == num {
+            return Some(v as u32 + 1);
+        }
+    }
     None
 }

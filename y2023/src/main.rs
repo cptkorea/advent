@@ -14,7 +14,7 @@ struct Args {
 fn main() {
     let args = Args::parse();
     if 1 <= args.date && args.date <= 25 {
-        match advent::run(2023, args.date, args.part) {
+        match y2023::run(2023, args.date, args.part) {
             Ok(res) => println!("Day {}, Part {}: {}", args.date, args.part, res),
             Err(err) => eprintln!("{}", err),
         }

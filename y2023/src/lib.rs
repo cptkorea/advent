@@ -23,7 +23,7 @@ pub trait AdventProblem {
             1 => self.run_part_1(lines),
             2 => self.run_part_2(lines),
             _ => unimplemented!("part {}", part),
-        }  
+        }
     }
 }
 
@@ -37,7 +37,7 @@ pub enum AdventError {
 
 fn read_input_file(year: u32, date: u8) -> Result<Vec<String>, io::Error> {
     let mut lines = Vec::new();
-    let file = File::open(format!("./src/y{}/inputs/daay{}.txt", year, date))?;
+    let file = File::open(format!("./y{}/inputs/day{}.txt", year, date))?;
     for next in io::BufReader::new(file).lines() {
         match next {
             Ok(line) => lines.push(line),
