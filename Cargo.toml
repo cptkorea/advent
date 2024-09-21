@@ -9,4 +9,5 @@ members = [
 
 [workspace.dependencies]
 clap = {version = "4", features = ["derive"]}
+regex = "1.10"
 thiserror = "1.0.63"
