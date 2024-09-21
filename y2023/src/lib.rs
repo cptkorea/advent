@@ -23,7 +23,7 @@ pub trait AdventProblem {
             1 => self.run_part_1(lines),
             2 => self.run_part_2(lines),
             _ => unimplemented!("part {}", part),
-        }  
+        }
     }
 }
 

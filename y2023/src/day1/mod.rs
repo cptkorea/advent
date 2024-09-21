@@ -1,5 +1,9 @@
 use crate::{AdventError, AdventProblem};
 
+const NUMBERS: [&str; 9] = [
+    "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+];
+
 pub struct Day1;
 
 impl AdventProblem for Day1 {
