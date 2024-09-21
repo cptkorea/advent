@@ -8,67 +8,61 @@ pub struct Day1;
 
 impl AdventProblem for Day1 {
     fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
-        let total = lines
-            .iter()
-            .map(|s| first_last_digit(s))
-            .fold(0, |x, y| x + y.0 * 10 + y.1);
+        let total = lines.iter().map(|s| calibration_value(s)).sum();
         Ok(total)
     }
 
     fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
-        let total = lines
-            .iter()
-            .map(|s| alphabetic_first_last_digit(s))
-            .fold(0, |x, y| x + y.0 * 10 + y.1);
+        let total = lines.iter().map(|s| alpha_calibration_value(s)).sum();
         Ok(total)
     }
 }
 
-fn first_last_digit(s: &str) -> (u32, u32) {
-    let (mut first, mut last) = (0, 0);
+fn calibration_value(s: &str) -> u32 {
+    let mut calibration_value = 0;
 
     for c in s.chars() {
         if let Some(d) = c.to_digit(10) {
-            first = d;
+            calibration_value += 10 * d;
         }
     }
 
     for c in s.chars().rev() {
         if let Some(d) = c.to_digit(10) {
-            last = d;
+            calibration_value += d;
         }
     }
 
-    (first, last)
+    calibration_value
 }
 
-fn alphabetic_first_last_digit(s: &str) -> (u32, u32) {
-    let (mut first, mut last) = (0, 0);
+fn alpha_calibration_value(s: &str) -> u32 {
+    let mut calibration_value = 0;
 
     let n = s.len();
     let chars = s.chars().collect::<Vec<_>>();
 
     for (i, c) in chars.iter().enumerate() {
         if let Some(d) = c.to_digit(10) {
-            first = d;
+            calibration_value += 10 * d;
             break;
         } else if let Some(d) = match_digit(&s[i..]) {
-            first = d;
+            calibration_value += 10 * d;
             break;
         }
     }
 
     for (i, c) in chars.iter().rev().enumerate() {
         if let Some(d) = c.to_digit(10) {
-            last = d;
+            calibration_value += d;
             break;
         } else if let Some(d) = match_digit(&s[n - i - 1..]) {
-            last = d;
+            calibration_value += d;
             break;
         }
     }
 
-    (first, last)
+    calibration_value
 }
 
 fn match_digit(s: &str) -> Option<u32> {
