@@ -6,12 +6,14 @@ use thiserror::Error;
 mod day1;
 mod day2;
 mod day3;
+mod day4;
 
 pub fn factory(date: u8) -> Box<dyn AdventProblem> {
     match date {
         1 => Box::new(day1::Day1),
         2 => Box::new(day2::Day2),
         3 => Box::new(day3::Day3),
+        4 => Box::new(day4::Day4),
         _ => unimplemented!(),
     }
 }
