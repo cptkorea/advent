@@ -7,6 +7,7 @@ mod day1;
 mod day2;
 mod day3;
 mod day4;
+mod day5;
 
 pub fn factory(date: u8) -> Box<dyn AdventProblem> {
     match date {
@@ -14,6 +15,7 @@ pub fn factory(date: u8) -> Box<dyn AdventProblem> {
         2 => Box::new(day2::Day2),
         3 => Box::new(day3::Day3),
         4 => Box::new(day4::Day4),
+        5 => Box::new(day4::Day5),
         _ => unimplemented!(),
     }
 }
