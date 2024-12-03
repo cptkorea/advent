@@ -3,7 +3,7 @@ resolver = "2"
 
 members = [
     "y2023"
-]
+, "y2024"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
