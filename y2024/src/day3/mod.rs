@@ -110,7 +110,8 @@ mod test {
     #[test]
     fn parse_mul_with_switch() {
         let input = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))";
-        let factor = parse_multiplications_with_switch(input);
+        let (factor, switch) = parse_multiplications_with_switch(input, true);
         assert_eq!(48, factor);
+        assert!(switch);
     }
 }
