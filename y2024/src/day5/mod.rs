@@ -1,7 +1,4 @@
-use std::{
-    collections::{BinaryHeap, HashMap, HashSet},
-    fmt::Binary,
-};
+use std::collections::{HashMap, HashSet};
 
 use crate::{AdventError, AdventProblem};
 
