@@ -4,6 +4,7 @@ use std::{io, io::BufRead};
 use thiserror::Error;
 
 mod day1;
+mod day10;
 mod day2;
 mod day3;
 mod day4;
@@ -24,6 +25,7 @@ pub fn factory(date: u8) -> Box<dyn AdventProblem> {
         7 => Box::new(day7::Day7),
         8 => Box::new(day8::Day8),
         9 => Box::new(day9::Day9),
+        10 => Box::new(day10::Day10),
         _ => unimplemented!(),
     }
 }
