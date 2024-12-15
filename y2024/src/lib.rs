@@ -8,6 +8,7 @@ mod day10;
 mod day11;
 mod day12;
 mod day13;
+mod day14;
 mod day2;
 mod day3;
 mod day4;
@@ -32,6 +33,7 @@ pub fn factory(date: u8) -> Box<dyn AdventProblem> {
         11 => Box::new(day11::Day11),
         12 => Box::new(day12::Day12),
         13 => Box::new(day13::Day13),
+        14 => Box::new(day14::Day14),
         _ => unimplemented!(),
     }
 }
@@ -77,4 +79,14 @@ pub fn run(year: u32, date: u8, part: u8) -> Result<u32, AdventError> {
 pub fn run_with_lines(lines: Vec<String>, date: u8, part: u8) -> Result<u32, AdventError> {
     let d = factory(date);
     d.run(lines, part)
+}
+
+#[macro_export]
+macro_rules! regex {
+    ($re:literal $(,)?) => {{
+        use {regex::Regex, std::sync::OnceLock};
+
+        static RE: OnceLock<Regex> = OnceLock::new();
+        RE.get_or_init(|| Regex::new($re).unwrap())
+    }};
 }
