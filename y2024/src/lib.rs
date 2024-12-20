@@ -12,6 +12,7 @@ mod day14;
 mod day15;
 mod day16;
 mod day17;
+mod day18;
 mod day2;
 mod day3;
 mod day4;
@@ -40,6 +41,7 @@ pub fn factory(date: u8) -> Box<dyn AdventProblem> {
         15 => Box::new(day15::Day15),
         16 => Box::new(day16::Day16),
         17 => Box::new(day17::Day17),
+        18 => Box::new(day18::Day18),
         _ => unimplemented!(),
     }
 }
