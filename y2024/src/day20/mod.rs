@@ -1,5 +1,8 @@
 use crate::{AdventError, AdventProblem};
-use std::{cmp::Ordering, collections::BinaryHeap};
+use std::{
+    cmp::Ordering,
+    collections::{BinaryHeap, HashSet, VecDeque},
+};
 
 pub struct Day20;
 
@@ -23,7 +26,7 @@ impl AdventProblem for Day20 {
             .collect::<Vec<Vec<_>>>();
 
         let shortest_distances = find_shortest_distances(&grid);
-        let num_shortcuts = find_2s_shortcuts(&grid, &shortest_distances);
+        let num_shortcuts = find_20ps_shortcuts(&grid, &shortest_distances);
 
         Ok(num_shortcuts)
     }
@@ -139,6 +142,54 @@ fn find_2ps_shortcuts(grid: &Vec<Vec<char>>, shortest_distances: &Vec<Vec<u32>>)
                         let shortcut = shortest_distances[i][j] - shortest_distances[nr][nc] - 2;
                         if shortcut >= 100 {
                             total += 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    total
+}
+
+fn find_20ps_shortcuts(grid: &Vec<Vec<char>>, shortest_distances: &Vec<Vec<u32>>) -> u32 {
+    let mut total = 0;
+    let boundary = (grid.len(), grid[0].len());
+
+    for i in 0..shortest_distances.len() {
+        for j in 0..shortest_distances[i].len() {
+            if grid[i][j] == '#' {
+                continue;
+            }
+
+            let mut queue = VecDeque::new();
+            let mut visited = HashSet::new();
+            queue.push_back(((i, j), 0));
+            visited.insert((i, j));
+
+            while !queue.is_empty() {
+                let ((r, c), dist) = queue.pop_front().unwrap();
+                if dist > 20 {
+                    continue;
+                }
+
+                if grid[r][c] != '#' && shortest_distances[r][c] + dist < shortest_distances[i][j] {
+                    let shortcut = shortest_distances[i][j] - shortest_distances[r][c] - dist;
+                    if shortcut >= 100 {
+                        total += 1;
+                    }
+                }
+
+                for dir in [
+                    Direction::Up,
+                    Direction::Left,
+                    Direction::Right,
+                    Direction::Down,
+                ] {
+                    if let Some((nr, nc)) = next_space((r, c), boundary, 1, dir) {
+                        if !visited.contains(&(nr, nc)) {
+                            visited.insert((nr, nc));
+                            queue.push_back(((nr, nc), dist + 1));
                         }
                     }
                 }
