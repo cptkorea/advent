@@ -1,4 +1,4 @@
-use crate::{regex, AdventError, AdventProblem};
+use crate::{AdventError, AdventProblem};
 use std::collections::{HashMap, HashSet};
 
 pub struct Day14;
@@ -138,11 +138,7 @@ enum Quadrant {
 
 fn modulus(a: i64, b: i64) -> i64 {
     let rem = a % b;
-    if rem < 0 {
-        rem + b
-    } else {
-        rem
-    }
+    if rem < 0 { rem + b } else { rem }
 }
 
 #[cfg(test)]
@@ -198,6 +194,6 @@ mod test {
             "p=9,5 v=-3,-3",
         ];
 
-        let robots = lines.iter().map(|s| parse_line(s)).collect::<Vec<_>>();
+        let _ = lines.iter().map(|s| parse_line(s)).collect::<Vec<_>>();
     }
 }

@@ -57,13 +57,6 @@ fn cached_robot_dirs(seq: &str) -> String {
     dirs
 }
 
-enum Direction {
-    Up,
-    Down,
-    Left,
-    Right,
-}
-
 fn push_horizontal(s: &mut String, start: (usize, usize), end: (usize, usize)) {
     if end.1 > start.1 {
         for _ in 0..(end.1 - start.1) {
@@ -188,7 +181,7 @@ fn append_directions(pos: (usize, usize), next: (usize, usize), empty: (usize, u
  * v<<A>>^Av<A>A^AvAA<^A>A 23
  *
  */
-
+#[allow(dead_code)]
 fn up_directions(seq: &str, keys: &HashMap<char, (usize, usize)>) -> String {
     let mut pos = keys[&'A'];
     let mut directions = String::new();
@@ -222,6 +215,7 @@ fn up_directions(seq: &str, keys: &HashMap<char, (usize, usize)>) -> String {
     directions
 }
 
+#[allow(dead_code)]
 fn generate_directions(start: (usize, usize), end: (usize, usize)) -> Vec<String> {
     let mut directions = Vec::new();
     let mut row_first = String::new();
@@ -256,6 +250,7 @@ fn generate_directions(start: (usize, usize), end: (usize, usize)) -> Vec<String
     directions
 }
 
+#[allow(dead_code)]
 fn left_directions(seq: &str, keys: &HashMap<char, (usize, usize)>) -> String {
     let mut pos = keys[&'A'];
     let mut directions = String::new();

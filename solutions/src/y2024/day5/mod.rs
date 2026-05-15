@@ -39,24 +39,6 @@ pub struct Request {
     pages: Vec<u32>,
 }
 
-#[derive(Eq, PartialEq)]
-pub struct Page {
-    num: u32,
-    dependencies: HashSet<u32>,
-}
-
-impl Ord for Page {
-    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        self.dependencies.len().cmp(&other.dependencies.len())
-    }
-}
-
-impl PartialOrd for Page {
-    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        Some(self.cmp(other))
-    }
-}
-
 impl Request {
     fn middle(&self) -> u32 {
         self.pages[self.pages.len() / 2]

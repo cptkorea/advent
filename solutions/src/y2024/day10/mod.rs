@@ -29,6 +29,7 @@ impl AdventProblem for Day10 {
 
 #[derive(Debug)]
 struct Trailhead {
+    #[allow(dead_code)]
     start: (usize, usize),
     score: u32,
 }

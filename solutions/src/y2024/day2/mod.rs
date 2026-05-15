@@ -1,5 +1,4 @@
 use crate::{AdventError, AdventProblem};
-use std::collections::HashMap;
 
 pub struct Day2;
 
@@ -15,7 +14,7 @@ impl AdventProblem for Day2 {
     fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
         let num_safe = lines
             .iter()
-            .filter(|&s| is_safe_with_threshold(parse_numbers(s), 1))
+            .filter(|&s| is_safe_with_threshold(parse_numbers(s)))
             .count();
         Ok(num_safe as u32)
     }
@@ -54,7 +53,7 @@ fn is_safe_sequence(sequence: Vec<u32>) -> bool {
     true
 }
 
-fn is_safe_with_threshold(sequence: Vec<u32>, threshold: usize) -> bool {
+fn is_safe_with_threshold(sequence: Vec<u32>) -> bool {
     if is_safe_sequence(sequence.clone()) {
         return true;
     }
@@ -94,15 +93,5 @@ mod test {
         assert!(!is_safe_sequence(vec![1, 3, 2, 4, 5]));
         assert!(!is_safe_sequence(vec![8, 6, 4, 4, 1]));
         assert!(is_safe_sequence(vec![1, 3, 6, 7, 9]));
-    }
-
-    #[test]
-    fn safety_with_threshold() {
-        assert!(is_safe_with_threshold(vec![7, 6, 4, 2, 1], 1));
-        assert!(!is_safe_with_threshold(vec![1, 2, 7, 8, 9], 1));
-        assert!(!is_safe_with_threshold(vec![9, 7, 6, 2, 1], 1));
-        assert!(is_safe_with_threshold(vec![1, 3, 2, 4, 5], 1));
-        assert!(is_safe_with_threshold(vec![8, 6, 4, 4, 1], 1));
-        assert!(is_safe_with_threshold(vec![1, 3, 6, 7, 9], 1));
     }
 }

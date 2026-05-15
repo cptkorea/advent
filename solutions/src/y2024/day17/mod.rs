@@ -14,6 +14,7 @@ impl AdventProblem for Day17 {
     }
 
     fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+        println!("lines={lines:?}");
         Ok(0)
     }
 }
