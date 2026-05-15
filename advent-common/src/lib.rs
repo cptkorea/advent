@@ -29,3 +29,5 @@ macro_rules! define_advent_registry {
         }
     };
 }
+
+pub mod rotation;
