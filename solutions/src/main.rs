@@ -18,7 +18,10 @@ struct Args {
 fn main() {
     let args = Args::parse();
     if ![2023u32, 2024, 2025].contains(&args.year) {
-        eprintln!("Unsupported year {}, expected 2023, 2024, or 2025", args.year);
+        eprintln!(
+            "Unsupported year {}, expected 2023, 2024, or 2025",
+            args.year
+        );
         std::process::exit(1);
     }
     if !(1..=25).contains(&args.date) {
@@ -27,7 +30,10 @@ fn main() {
     }
 
     match solutions::run(args.year, args.date, args.part) {
-        Ok(res) => println!("Year {}, Day {}, Part {}: {}", args.year, args.date, args.part, res),
+        Ok(res) => println!(
+            "Year {}, Day {}, Part {}: {}",
+            args.year, args.date, args.part, res
+        ),
         Err(err) => {
             eprintln!("{}", err);
             std::process::exit(1);
