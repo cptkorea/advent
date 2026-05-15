@@ -60,11 +60,11 @@ fn cached_robot_dirs(seq: &str) -> String {
 fn push_horizontal(s: &mut String, start: (usize, usize), end: (usize, usize)) {
     if end.1 > start.1 {
         for _ in 0..(end.1 - start.1) {
-            s.push_str(">");
+            s.push('>');
         }
     } else if start.1 > end.1 {
         for _ in 0..(start.1 - end.1) {
-            s.push_str("<");
+            s.push('<');
         }
     }
 }
@@ -72,11 +72,11 @@ fn push_horizontal(s: &mut String, start: (usize, usize), end: (usize, usize)) {
 fn push_vertical(s: &mut String, start: (usize, usize), end: (usize, usize)) {
     if end.0 > start.0 {
         for _ in 0..(end.0 - start.0) {
-            s.push_str("^");
+            s.push('^');
         }
     } else if start.0 > end.0 {
         for _ in 0..(start.0 - end.0) {
-            s.push_str("v");
+            s.push('v');
         }
     }
 }
@@ -89,7 +89,7 @@ fn directions(seq: &str, keys: &HashMap<char, (usize, usize)>, empty: (usize, us
         let next = keys[&c];
         let next_dirs = append_directions(pos, next, empty);
         directions.push_str(&next_dirs);
-        directions.push_str("A");
+        directions.push('A');
         pos = next;
     }
 
@@ -119,7 +119,7 @@ fn directions_with_cache(
                 cache.insert((curr_ch, next_ch), dirs);
             }
         }
-        directions.push_str("A");
+        directions.push('A');
         pos = next;
         curr_ch = next_ch;
     }
@@ -190,25 +190,25 @@ fn up_directions(seq: &str, keys: &HashMap<char, (usize, usize)>) -> String {
         let next = keys[&c];
         if next.0 > pos.0 {
             for _ in 0..(next.0 - pos.0) {
-                directions.push_str("^");
+                directions.push('^');
             }
         } else if pos.0 > next.0 {
             for _ in 0..(pos.0 - next.0) {
-                directions.push_str("v");
+                directions.push('v');
             }
         }
 
         if next.1 > pos.1 {
             for _ in 0..(next.1 - pos.1) {
-                directions.push_str(">");
+                directions.push('>');
             }
         } else if pos.1 > next.1 {
             for _ in 0..(pos.1 - next.1) {
-                directions.push_str("<");
+                directions.push('<');
             }
         }
 
-        directions.push_str("A");
+        directions.push('A');
         pos = next;
     }
 
@@ -221,13 +221,13 @@ fn generate_directions(start: (usize, usize), end: (usize, usize)) -> Vec<String
     let mut row_first = String::new();
     if end.0 > start.0 {
         for _ in 0..(start.0 - end.0) {
-            row_first.push_str("^");
+            row_first.push('^');
         }
         directions.push(row_first);
     } else if start.0 > end.0 {
         if end.1 != 0 {
             for _ in 0..(end.0 - start.0) {
-                row_first.push_str("v");
+                row_first.push('v');
             }
             directions.push(row_first);
         }
@@ -236,13 +236,13 @@ fn generate_directions(start: (usize, usize), end: (usize, usize)) -> Vec<String
     let mut col_first = String::new();
     if end.1 > start.1 {
         for _ in 0..(start.1 - end.1) {
-            col_first.push_str("^");
+            col_first.push('^');
         }
         directions.push(col_first);
     } else if start.1 > end.1 {
         if end.0 != 0 {
             for _ in 0..(end.1 - start.1) {
-                col_first.push_str("v");
+                col_first.push('v');
             }
             directions.push(col_first);
         }
@@ -259,25 +259,25 @@ fn left_directions(seq: &str, keys: &HashMap<char, (usize, usize)>) -> String {
         let next = keys[&c];
         if next.1 > pos.1 {
             for _ in 0..(next.1 - pos.1) {
-                directions.push_str(">");
+                directions.push('>');
             }
         } else if pos.1 > next.1 {
             for _ in 0..(pos.1 - next.1) {
-                directions.push_str("<");
+                directions.push('<');
             }
         }
 
         if next.0 > pos.0 {
             for _ in 0..(next.0 - pos.0) {
-                directions.push_str("^");
+                directions.push('^');
             }
         } else if pos.0 > next.0 {
             for _ in 0..(pos.0 - next.0) {
-                directions.push_str("v");
+                directions.push('v');
             }
         }
 
-        directions.push_str("A");
+        directions.push('A');
         pos = next;
     }
 
