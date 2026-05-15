@@ -62,9 +62,9 @@ fn count_xmas(grid: Vec<Vec<char>>) -> u32 {
     let (m, n) = (grid.len(), grid[0].len());
     let mut queue = VecDeque::new();
     let mut count = 0;
-    for i in 0..m {
-        for j in 0..n {
-            if grid[i][j] == 'X' {
+    for (i, row) in grid.iter().enumerate() {
+        for (j, c) in row.iter().enumerate() {
+            if *c == 'X' {
                 queue.push_back((i, j, Direction::North, 1));
                 queue.push_back((i, j, Direction::South, 1));
                 queue.push_back((i, j, Direction::East, 1));
@@ -171,9 +171,10 @@ fn find_mas(grid: Vec<Vec<char>>) -> HashSet<(usize, usize, Direction)> {
     let (m, n) = (grid.len(), grid[0].len());
     let mut queue = VecDeque::new();
     let mut end_points = HashSet::new();
-    for i in 0..m {
-        for j in 0..n {
-            if grid[i][j] == 'M' {
+
+    for (i, row) in grid.iter().enumerate() {
+        for (j, c) in row.iter().enumerate() {
+            if *c == 'M' {
                 queue.push_back((i, j, Direction::NorthWest, 2));
                 queue.push_back((i, j, Direction::NorthEast, 2));
                 queue.push_back((i, j, Direction::SouthWest, 2));

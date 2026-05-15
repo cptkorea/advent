@@ -10,26 +10,21 @@ impl TryFrom<&String> for Turn {
     type Error = AdventError;
 
     fn try_from(value: &String) -> Result<Self, Self::Error> {
-        if value.len() == 0 {
+        if value.is_empty() {
             return Err(AdventError::InputParseError("line is empty".into()));
         }
 
         let bytes = value.as_bytes();
-        let dir;
 
-        match bytes[0] {
-            b'R' => {
-                dir = Rotation::Clockwise;
-            }
-            b'L' => {
-                dir = Rotation::CounterClockwise;
-            }
+        let dir = match bytes[0] {
+            b'R' => Rotation::Clockwise,
+            b'L' => Rotation::CounterClockwise,
             c => {
                 return Err(AdventError::InputParseError(
                     format!("first character {c} is not R/L").into(),
-                ))
+                ));
             }
-        }
+        };
 
         let rem = &value[1..];
         let mag = rem.parse::<usize>().map_err(|_e| {
@@ -61,7 +56,7 @@ impl AdventProblem for Day1 {
                     if mag > pos {
                         pos = NUM_DIALS + pos - mag;
                     } else {
-                        pos = pos - mag;
+                        pos -= mag;
                     }
                 }
             }

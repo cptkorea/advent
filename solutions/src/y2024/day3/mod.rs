@@ -66,29 +66,29 @@ fn parse_multiplications_with_switch(s: &str, mut process: bool) -> (u32, bool) 
     (total, process)
 }
 
-fn parse_mul_sign(chars: &Vec<char>, i: usize) -> (Option<(u32, u32)>, usize) {
+fn parse_mul_sign(chars: &[char], i: usize) -> (Option<(u32, u32)>, usize) {
     let n = chars.len();
-    let (first, mut i) = parse_number(&chars, i);
+    let (first, mut i) = parse_number(chars, i);
     if first.is_none() || i >= n || chars[i] != ',' {
         return (None, i);
     } else {
         i += 1;
     }
-    let (second, i) = parse_number(&chars, i);
+    let (second, i) = parse_number(chars, i);
     if second.is_none() || i >= n || chars[i] != ')' {
         return (None, i);
     }
     (Some((first.unwrap(), second.unwrap())), i)
 }
 
-fn parse_number(chars: &Vec<char>, mut i: usize) -> (Option<u32>, usize) {
+fn parse_number(chars: &[char], mut i: usize) -> (Option<u32>, usize) {
     let n = chars.len();
-    if i >= n || !chars[i].is_digit(10) {
+    if i >= n || !chars[i].is_ascii_digit() {
         return (None, i);
     }
 
     let mut num = 0;
-    while i < n && chars[i].is_digit(10) {
+    while i < n && chars[i].is_ascii_digit() {
         num *= 10;
         num += chars[i].to_digit(10).unwrap();
         i += 1;

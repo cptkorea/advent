@@ -14,11 +14,12 @@ impl AdventProblem for Day17 {
     }
 
     fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+        println!("lines={lines:?}");
         Ok(0)
     }
 }
 
-fn parse_lines(lines: &Vec<String>) -> Computer {
+fn parse_lines(lines: &[String]) -> Computer {
     let a = lines[0]
         .split(": ")
         .nth(1)
@@ -45,7 +46,6 @@ fn parse_lines(lines: &Vec<String>) -> Computer {
         .nth(1)
         .unwrap()
         .split(",")
-        .into_iter()
         .map(|s| s.parse().expect("numeric opcode"))
         .collect::<Vec<u8>>();
 

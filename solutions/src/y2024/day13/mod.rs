@@ -41,7 +41,7 @@ macro_rules! regex {
     }};
 }
 
-fn parse_lines(lines: &Vec<String>, offset: u64) -> Vec<Game> {
+fn parse_lines(lines: &[String], offset: u64) -> Vec<Game> {
     let mut i = 0;
     let n = lines.len();
 
@@ -63,7 +63,7 @@ fn parse_lines(lines: &Vec<String>, offset: u64) -> Vec<Game> {
         games.push(Game {
             button_a: (x_a, y_a),
             button_b: (x_b, y_b),
-            prize: (p_a + offset as u64, p_b + offset as u64),
+            prize: (p_a + offset, p_b + offset),
         });
 
         i += 4;

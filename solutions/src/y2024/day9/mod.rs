@@ -48,6 +48,7 @@ impl DiskMap {
         }
     }
 
+    #[cfg(test)]
     fn checksum(&self) -> u64 {
         let mut total = 0;
         for (i, v) in self.data.iter().enumerate() {

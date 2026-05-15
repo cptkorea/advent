@@ -55,7 +55,7 @@ fn blink(n: u64) -> Vec<u64> {
     }
 
     let digits = n.to_string();
-    if digits.len() % 2 == 0 {
+    if digits.len().is_multiple_of(2) {
         let first = digits[..digits.len() / 2].parse::<u64>().unwrap();
         let second = digits[digits.len() / 2..].parse::<u64>().unwrap();
         vec![first, second]

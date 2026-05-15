@@ -39,10 +39,11 @@ fn is_constructable(line: &str, patterns: &[&str], i: usize) -> bool {
     }
 
     for &p in patterns {
-        if i + p.len() <= n && &line[i..i + p.len()] == p {
-            if is_constructable(line, patterns, i + p.len()) {
-                return true;
-            }
+        if i + p.len() <= n
+            && &line[i..i + p.len()] == p
+            && is_constructable(line, patterns, i + p.len())
+        {
+            return true;
         }
     }
     false

@@ -48,14 +48,13 @@ enum Direction {
     SouthEast,
 }
 
-fn find_antennas(grid: &Vec<Vec<char>>) -> HashMap<char, Vec<(usize, usize)>> {
+fn find_antennas(grid: &[Vec<char>]) -> HashMap<char, Vec<(usize, usize)>> {
     let mut antennas: HashMap<char, Vec<(usize, usize)>> = HashMap::new();
-    let (m, n) = (grid.len(), grid[0].len());
-    for i in 0..m {
-        for j in 0..n {
-            let c = grid[i][j];
+
+    for (i, row) in grid.iter().enumerate() {
+        for (j, c) in row.iter().enumerate() {
             if c.is_ascii_alphabetic() || c.is_numeric() {
-                antennas.entry(c).or_default().push((i, j));
+                antennas.entry(*c).or_default().push((i, j));
             }
         }
     }
@@ -81,8 +80,7 @@ fn antinode_coords(coords: &[(usize, usize)], m: usize, n: usize) -> HashSet<(us
 
     for i in 0..num_antennas {
         let first = coords[i];
-        for j in i + 1..num_antennas {
-            let second = coords[j];
+        for second in coords.iter().take(num_antennas).skip(i + 1) {
             let (dr, dc) = (abs_diff(first.0, second.0), abs_diff(first.1, second.1));
             /* Assuming coords are sorted by row, there are two possible orientations
              * First is left of second
@@ -95,12 +93,12 @@ fn antinode_coords(coords: &[(usize, usize)], m: usize, n: usize) -> HashSet<(us
             // First antenna is on the left, antinode will be left of first, right of second
             if first.1 < second.1 {
                 if let Some(coord) =
-                    next_antinode(first, second, dr, dc, m, n, Direction::NorthWest)
+                    next_antinode(first, *second, dr, dc, m, n, Direction::NorthWest)
                 {
                     antinodes.insert(coord);
                 }
                 if let Some(coord) =
-                    next_antinode(first, second, dr, dc, m, n, Direction::SouthEast)
+                    next_antinode(first, *second, dr, dc, m, n, Direction::SouthEast)
                 {
                     antinodes.insert(coord);
                 }
@@ -108,12 +106,12 @@ fn antinode_coords(coords: &[(usize, usize)], m: usize, n: usize) -> HashSet<(us
             // First is on the right, antinode will be right of first, left of second
             else {
                 if let Some(coord) =
-                    next_antinode(first, second, dr, dc, m, n, Direction::NorthEast)
+                    next_antinode(first, *second, dr, dc, m, n, Direction::NorthEast)
                 {
                     antinodes.insert(coord);
                 }
                 if let Some(coord) =
-                    next_antinode(first, second, dr, dc, m, n, Direction::SouthWest)
+                    next_antinode(first, *second, dr, dc, m, n, Direction::SouthWest)
                 {
                     antinodes.insert(coord);
                 }
@@ -130,10 +128,8 @@ fn antinode_coords_v2(coords: &[(usize, usize)], m: usize, n: usize) -> HashSet<
     let num_antennas = coords.len();
     let mut antinodes = HashSet::new();
 
-    for i in 0..num_antennas {
-        let first = coords[i];
-        for j in i + 1..num_antennas {
-            let second = coords[j];
+    for (i, first) in coords.iter().enumerate() {
+        for second in coords.iter().take(num_antennas).skip(i + 1) {
             let (dr, dc) = (abs_diff(first.0, second.0), abs_diff(first.1, second.1));
             /* Assuming coords are sorted by row, there are two possible orientations
              * First is left of second
@@ -145,7 +141,7 @@ fn antinode_coords_v2(coords: &[(usize, usize)], m: usize, n: usize) -> HashSet<
              */
             // First antenna is on the left, antinode will be left of first, right of second
             if first.1 < second.1 {
-                let (mut left, mut right) = (first, second);
+                let (mut left, mut right) = (*first, *second);
                 antinodes.insert(left);
                 antinodes.insert(right);
 
@@ -157,7 +153,7 @@ fn antinode_coords_v2(coords: &[(usize, usize)], m: usize, n: usize) -> HashSet<
                     left = coord;
                 }
 
-                (left, right) = (first, second);
+                (left, right) = (*first, *second);
                 while let Some(coord) =
                     next_antinode(left, right, dr, dc, m, n, Direction::SouthEast)
                 {
@@ -168,7 +164,7 @@ fn antinode_coords_v2(coords: &[(usize, usize)], m: usize, n: usize) -> HashSet<
             }
             // First is on the right, antinode will be right of first, left of second
             else {
-                let (mut right, mut left) = (first, second);
+                let (mut right, mut left) = (*first, *second);
                 antinodes.insert(left);
                 antinodes.insert(right);
 
@@ -180,7 +176,7 @@ fn antinode_coords_v2(coords: &[(usize, usize)], m: usize, n: usize) -> HashSet<
                     right = coord;
                 }
 
-                (left, right) = (first, second);
+                (left, right) = (*first, *second);
                 while let Some(coord) =
                     next_antinode(left, right, dr, dc, m, n, Direction::SouthWest)
                 {
@@ -231,11 +227,7 @@ fn next_antinode(
 
 /// helper function to take absolute difference without overflowing
 fn abs_diff(x: usize, y: usize) -> usize {
-    if x >= y {
-        x - y
-    } else {
-        y - x
-    }
+    if x >= y { x - y } else { y - x }
 }
 
 #[cfg(test)]

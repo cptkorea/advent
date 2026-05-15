@@ -49,12 +49,10 @@ impl Direction {
     }
 }
 
-fn find_start(grid: &Vec<Vec<char>>) -> (usize, usize) {
-    let (m, n) = (grid.len(), grid[0].len());
-
-    for i in 0..m {
-        for j in 0..n {
-            if grid[i][j] == '^' {
+fn find_start(grid: &[Vec<char>]) -> (usize, usize) {
+    for (i, row) in grid.iter().enumerate() {
+        for (j, c) in row.iter().enumerate() {
+            if *c == '^' {
                 return (i, j);
             }
         }
@@ -62,7 +60,7 @@ fn find_start(grid: &Vec<Vec<char>>) -> (usize, usize) {
     (0, 0)
 }
 
-fn find_visited(grid: &Vec<Vec<char>>, start: (usize, usize)) -> HashSet<(usize, usize)> {
+fn find_visited(grid: &[Vec<char>], start: (usize, usize)) -> HashSet<(usize, usize)> {
     let mut visited = HashSet::new();
     let (mut curr, mut curr_dir) = (start, Direction::North);
     visited.insert(curr);
@@ -76,7 +74,7 @@ fn find_visited(grid: &Vec<Vec<char>>, start: (usize, usize)) -> HashSet<(usize,
 }
 
 fn find_obstacles(
-    grid: &mut Vec<Vec<char>>,
+    grid: &mut [Vec<char>],
     start: (usize, usize),
     visited: &HashSet<(usize, usize)>,
 ) -> HashSet<(usize, usize)> {
@@ -91,7 +89,7 @@ fn find_obstacles(
     obstacles
 }
 
-fn try_traversal(grid: &Vec<Vec<char>>, start: (usize, usize)) -> bool {
+fn try_traversal(grid: &[Vec<char>], start: (usize, usize)) -> bool {
     let mut visited = HashSet::new();
     let (mut curr, mut curr_dir) = (start, Direction::North);
     visited.insert((curr, Direction::North));
@@ -108,7 +106,7 @@ fn try_traversal(grid: &Vec<Vec<char>>, start: (usize, usize)) -> bool {
 }
 
 fn transition(
-    grid: &Vec<Vec<char>>,
+    grid: &[Vec<char>],
     curr: (usize, usize),
     direction: Direction,
 ) -> Option<(usize, usize, Direction)> {
@@ -142,8 +140,8 @@ fn transition(
     };
 
     if grid[next_row][next_col] == '#' {
-        return Some((row, col, direction.rotate()));
+        Some((row, col, direction.rotate()))
     } else {
-        return Some((next_row, next_col, direction));
+        Some((next_row, next_col, direction))
     }
 }

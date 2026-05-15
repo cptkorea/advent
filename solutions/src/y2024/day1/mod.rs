@@ -47,7 +47,7 @@ fn parse_lines(lines: &Vec<String>) -> (Vec<u32>, Vec<u32>) {
     (first_measurements, second_measurements)
 }
 
-fn collect_frequencies(measurements: &Vec<u32>) -> HashMap<u32, u32> {
+fn collect_frequencies(measurements: &[u32]) -> HashMap<u32, u32> {
     let mut frequencies = HashMap::new();
 
     measurements.iter().for_each(|m| {

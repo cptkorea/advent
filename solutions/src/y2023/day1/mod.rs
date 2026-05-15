@@ -84,7 +84,7 @@ fn find_digit_from_start(s: &str, i: usize) -> Option<u32> {
 fn find_digit_from_end(s: &str, j: usize) -> Option<u32> {
     for (v, &num) in NUMBERS.iter().enumerate() {
         // SAFETY: Take max with 0 first to avoid unsigned integer underflow
-        let i = j.checked_sub(num.len()).unwrap_or(0);
+        let i = j.saturating_sub(num.len());
         if &s[i..j] == num {
             return Some(v as u32 + 1);
         }

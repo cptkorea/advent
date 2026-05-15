@@ -53,7 +53,7 @@ impl AdventProblem for Day15 {
     }
 }
 
-fn parse_grid<S: AsRef<str>>(lines: &Vec<S>) -> (Grid, usize) {
+fn parse_grid<S: AsRef<str>>(lines: &[S]) -> (Grid, usize) {
     let mut spaces = Vec::new();
     let (mut i, n) = (0, lines.len());
     let mut robot = (0, 0);
@@ -78,7 +78,7 @@ fn parse_grid<S: AsRef<str>>(lines: &Vec<S>) -> (Grid, usize) {
     (Grid { spaces, robot }, i)
 }
 
-fn parse_wide_grid<S: AsRef<str>>(lines: &Vec<S>) -> (Grid, usize) {
+fn parse_wide_grid<S: AsRef<str>>(lines: &[S]) -> (Grid, usize) {
     let mut spaces = Vec::new();
     let (mut i, n) = (0, lines.len());
     let mut robot = (0, 0);
@@ -118,7 +118,7 @@ fn parse_wide_grid<S: AsRef<str>>(lines: &Vec<S>) -> (Grid, usize) {
     (Grid { spaces, robot }, i)
 }
 
-fn parse_directions(lines: &Vec<String>, start: usize) -> Vec<Direction> {
+fn parse_directions(lines: &[String], start: usize) -> Vec<Direction> {
     let mut i = start;
     let mut directions = Vec::new();
 

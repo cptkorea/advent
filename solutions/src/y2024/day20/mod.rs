@@ -66,13 +66,13 @@ impl PartialOrd for State {
     }
 }
 
-fn find_shortest_distances(grid: &Vec<Vec<char>>) -> Vec<Vec<u32>> {
+fn find_shortest_distances(grid: &[Vec<char>]) -> Vec<Vec<u32>> {
     let boundary = (grid.len(), grid[0].len());
     let mut end = (0, 0);
 
-    for i in 0..boundary.0 {
-        for j in 0..boundary.1 {
-            if grid[i][j] == 'E' {
+    for (i, row) in grid.iter().enumerate().take(boundary.0) {
+        for (j, c) in row.iter().enumerate() {
+            if *c == 'E' {
                 end = (i, j);
             }
         }
@@ -119,7 +119,7 @@ fn find_shortest_distances(grid: &Vec<Vec<char>>) -> Vec<Vec<u32>> {
     shortest_distances
 }
 
-fn find_2ps_shortcuts(grid: &Vec<Vec<char>>, shortest_distances: &Vec<Vec<u32>>) -> u32 {
+fn find_2ps_shortcuts(grid: &[Vec<char>], shortest_distances: &[Vec<u32>]) -> u32 {
     let mut total = 0;
     let boundary = (grid.len(), grid[0].len());
 
@@ -152,7 +152,7 @@ fn find_2ps_shortcuts(grid: &Vec<Vec<char>>, shortest_distances: &Vec<Vec<u32>>)
     total
 }
 
-fn find_20ps_shortcuts(grid: &Vec<Vec<char>>, shortest_distances: &Vec<Vec<u32>>) -> u32 {
+fn find_20ps_shortcuts(grid: &[Vec<char>], shortest_distances: &[Vec<u32>]) -> u32 {
     let mut total = 0;
     let boundary = (grid.len(), grid[0].len());
 

@@ -62,9 +62,7 @@ fn banana_prices(n: u64) -> HashMap<(i64, i64, i64, i64), u64> {
         let seq = (prev_seq.0, prev_seq.1, prev_seq.2, diff);
 
         if price > 0 {
-            if !prices.contains_key(&seq) {
-                prices.insert(seq, price);
-            }
+            prices.entry(seq).or_insert(price);
         }
 
         prev = next;

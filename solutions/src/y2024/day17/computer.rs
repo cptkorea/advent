@@ -21,6 +21,7 @@ impl Computer {
         }
     }
 
+    #[allow(dead_code)]
     pub fn restart(&mut self, a: u64, b: u64, c: u64) {
         self.registers.a = a;
         self.registers.b = b;
@@ -64,6 +65,7 @@ impl Computer {
         &self.outputs
     }
 
+    #[cfg(test)]
     pub fn concat_output(&self) -> String {
         let mut total = String::new();
         for out in &self.outputs {
@@ -79,7 +81,7 @@ impl Computer {
     }
 
     fn bxl(&mut self, op: u64) {
-        self.registers.b = self.registers.b ^ op;
+        self.registers.b ^= op;
     }
 
     fn bst(&mut self, combo: u64) {
@@ -93,7 +95,7 @@ impl Computer {
     }
 
     fn bxc(&mut self, _: u64) {
-        self.registers.b = self.registers.b ^ self.registers.c;
+        self.registers.b ^= self.registers.c;
     }
 
     fn out(&mut self, combo: u64) {

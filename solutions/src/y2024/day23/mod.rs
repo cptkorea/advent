@@ -13,7 +13,7 @@ impl AdventProblem for Day23 {
                 for &n3 in &neighbors[&n2] {
                     for &n4 in &neighbors[&n3] {
                         if n4 == n1 {
-                            let mut triplet = vec![n1, n2, n3];
+                            let mut triplet = [n1, n2, n3];
                             triplet.sort();
                             triplets.insert((triplet[0], triplet[1], triplet[2]));
                         }
