@@ -3,59 +3,6 @@ use std::fs::File;
 use std::{io, io::BufRead};
 use thiserror::Error;
 
-mod day1;
-mod day10;
-mod day11;
-mod day12;
-mod day13;
-mod day14;
-mod day15;
-mod day16;
-mod day17;
-mod day18;
-mod day19;
-mod day2;
-mod day20;
-mod day21;
-mod day22;
-mod day23;
-mod day3;
-mod day4;
-mod day5;
-mod day6;
-mod day7;
-mod day8;
-mod day9;
-
-pub fn factory(date: u8) -> Box<dyn AdventProblem> {
-    match date {
-        1 => Box::new(day1::Day1),
-        2 => Box::new(day2::Day2),
-        3 => Box::new(day3::Day3),
-        4 => Box::new(day4::Day4),
-        5 => Box::new(day5::Day5),
-        6 => Box::new(day6::Day6),
-        7 => Box::new(day7::Day7),
-        8 => Box::new(day8::Day8),
-        9 => Box::new(day9::Day9),
-        10 => Box::new(day10::Day10),
-        11 => Box::new(day11::Day11),
-        12 => Box::new(day12::Day12),
-        13 => Box::new(day13::Day13),
-        14 => Box::new(day14::Day14),
-        15 => Box::new(day15::Day15),
-        16 => Box::new(day16::Day16),
-        17 => Box::new(day17::Day17),
-        18 => Box::new(day18::Day18),
-        19 => Box::new(day19::Day19),
-        20 => Box::new(day20::Day20),
-        21 => Box::new(day21::Day21),
-        22 => Box::new(day22::Day22),
-        23 => Box::new(day23::Day23),
-        _ => unimplemented!(),
-    }
-}
-
 pub trait AdventProblem {
     fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError>;
     fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError>;
@@ -76,6 +23,10 @@ pub enum AdventError {
     #[error("{0}")]
     InputParseError(Cow<'static, str>),
 }
+
+advent_common::define_advent_registry!(
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+);
 
 fn read_input_file(year: u32, date: u8) -> Result<Vec<String>, io::Error> {
     let mut lines = Vec::new();

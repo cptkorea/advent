@@ -3,21 +3,6 @@ use std::fs::File;
 use std::{io, io::BufRead};
 use thiserror::Error;
 
-mod day1;
-mod day2;
-mod day3;
-mod day4;
-
-pub fn factory(date: u8) -> Box<dyn AdventProblem> {
-    match date {
-        1 => Box::new(day1::Day1),
-        2 => Box::new(day2::Day2),
-        3 => Box::new(day3::Day3),
-        4 => Box::new(day4::Day4),
-        _ => unimplemented!(),
-    }
-}
-
 pub trait AdventProblem {
     fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError>;
     fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError>;
@@ -38,6 +23,8 @@ pub enum AdventError {
     #[error("{0}")]
     InputParseError(Cow<'static, str>),
 }
+
+advent_common::define_advent_registry!(1, 2, 3, 4);
 
 fn read_input_file(year: u32, date: u8) -> Result<Vec<String>, io::Error> {
     let mut lines = Vec::new();

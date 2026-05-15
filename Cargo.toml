@@ -1,13 +1,14 @@
 [workspace]
 resolver = "2"
 
-members = [
+members = ["advent-common",
     "y2023"
-, "y2024"]
+, "y2024", "y2025"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [workspace.dependencies]
 clap = {version = "4", features = ["derive"]}
+paste = "1"
 regex = "1.10"
 thiserror = "1.0.63"
