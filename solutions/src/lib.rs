@@ -23,6 +23,8 @@ pub enum AdventError {
     IoError(#[from] io::Error),
     #[error("{0}")]
     InputParseError(Cow<'static, str>),
+    #[error("unknown error")]
+    UnknownError,
 }
 
 #[macro_export]
