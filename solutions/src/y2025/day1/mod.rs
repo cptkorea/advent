@@ -47,39 +47,6 @@ pub struct Day1;
 
 const NUM_DIALS: usize = 100;
 
-/// Count of clicks `k` in `1..=steps` where the ticker is on `0`, starting `pos ∈ [0, N)`,
-/// moving clockwise one tick along `0..N-1`.
-fn tick_landings_on_zero_cw(pos: usize, steps: usize, n: usize) -> usize {
-    if steps == 0 || n == 0 {
-        return 0;
-    }
-    let pos = pos % n;
-    let first = if pos == 0 { n } else { n - pos };
-    if steps < first {
-        0
-    } else {
-        1 + (steps - first) / n
-    }
-}
-
-/// Same for counter-clockwise (one tick decreases `mod n`, hits `0` on step `pos`, `pos+n`, …).
-fn tick_landings_on_zero_ccw(pos: usize, steps: usize, n: usize) -> usize {
-    if steps == 0 || n == 0 {
-        return 0;
-    }
-    let pos = pos % n;
-    let first = if pos == 0 { n } else { pos };
-    if steps < first {
-        0
-    } else {
-        1 + (steps - first) / n
-    }
-}
-
-fn pos_after_ccw(pos: usize, steps: usize, n: usize) -> usize {
-    (pos as i128 - steps as i128).rem_euclid(n as i128) as usize
-}
-
 impl AdventProblem for Day1 {
     fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
         let mut pos = 50;
@@ -113,14 +80,34 @@ impl AdventProblem for Day1 {
 
         for line in &lines {
             let turn = Turn::try_from(line)?;
+            let m = turn.magnitude;
+
+            cnt += m / NUM_DIALS;
+            let mag = m % NUM_DIALS;
+
             match turn.direction {
                 Rotation::Clockwise => {
-                    cnt += tick_landings_on_zero_cw(pos, turn.magnitude, NUM_DIALS);
-                    pos = (pos + turn.magnitude) % NUM_DIALS;
+                    // Remainder: extra hit iff we land on/pass 0 once more before the lap completes.
+                    if (pos + mag) >= NUM_DIALS {
+                        cnt += 1;
+                    }
+                    // (pos + q * NUM_DIALS + mag) mod NUM_DIALS == (pos + mag) mod NUM_DIALS
+                    pos = (pos + mag) % NUM_DIALS;
                 }
                 Rotation::CounterClockwise => {
-                    cnt += tick_landings_on_zero_ccw(pos, turn.magnitude, NUM_DIALS);
-                    pos = pos_after_ccw(pos, turn.magnitude, NUM_DIALS);
+                    if pos == 0 {
+                        // From 0, hits occur at ticks NUM_DIALS, 2*NUM_DIALS, … within [1..mag].
+                        cnt += mag / NUM_DIALS;
+                    } else if mag >= pos {
+                        // Hits at pos, pos+NUM_DIALS, … up to mag.
+                        cnt += 1 + (mag - pos) / NUM_DIALS;
+                    }
+
+                    if mag > pos {
+                        pos = NUM_DIALS + pos - mag;
+                    } else {
+                        pos -= mag;
+                    }
                 }
             }
         }
