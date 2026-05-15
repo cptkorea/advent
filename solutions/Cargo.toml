@@ -1,0 +1,11 @@
+[package]
+name = "solutions"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+advent-common = { path = "../advent-common" }
+clap = { workspace = true }
+paste = { workspace = true }
+regex = { workspace = true }
+thiserror = { workspace = true }
