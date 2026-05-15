@@ -133,7 +133,7 @@ impl fmt::Debug for Plot {
 
 fn find_plots(
     mut grid: Vec<Vec<char>>,
-    plot_fn: fn(&mut Vec<Vec<char>>, start: (usize, usize)) -> Plot,
+    plot_fn: fn(&mut [Vec<char>], start: (usize, usize)) -> Plot,
 ) -> Vec<Plot> {
     let (m, n) = (grid.len(), grid[0].len());
     let mut plots = Vec::new();
@@ -150,7 +150,7 @@ fn find_plots(
     plots
 }
 
-fn discover_plot(grid: &mut Vec<Vec<char>>, start: (usize, usize)) -> Plot {
+fn discover_plot(grid: &mut [Vec<char>], start: (usize, usize)) -> Plot {
     let dirs = [
         Direction::North,
         Direction::South,
@@ -199,7 +199,7 @@ fn discover_plot(grid: &mut Vec<Vec<char>>, start: (usize, usize)) -> Plot {
     }
 }
 
-fn discover_sides(grid: &mut Vec<Vec<char>>, start: (usize, usize)) -> Plot {
+fn discover_sides(grid: &mut [Vec<char>], start: (usize, usize)) -> Plot {
     let dirs = [
         Direction::North,
         Direction::South,
@@ -223,11 +223,9 @@ fn discover_sides(grid: &mut Vec<Vec<char>>, start: (usize, usize)) -> Plot {
 
         for dir in dirs {
             if let Some((nr, nc)) = next_space(space, boundary, dir) {
-                if grid[nr][nc] == plant {
-                    if !visited.contains(&(nr, nc)) {
-                        visited.insert((nr, nc));
-                        stack.push_back((nr, nc));
-                    }
+                if grid[nr][nc] == plant && !visited.contains(&(nr, nc)) {
+                    visited.insert((nr, nc));
+                    stack.push_back((nr, nc));
                 }
             }
         }
@@ -248,7 +246,7 @@ fn discover_sides(grid: &mut Vec<Vec<char>>, start: (usize, usize)) -> Plot {
 }
 
 fn count_corners(
-    grid: &Vec<Vec<char>>,
+    grid: &[Vec<char>],
     space: (usize, usize),
     boundary: (usize, usize),
     plant: char,
@@ -279,9 +277,7 @@ fn count_corners(
     let corners = [(0, 2, 4), (1, 2, 5), (0, 3, 6), (1, 3, 7)];
 
     for (c1, c2, c3) in corners {
-        if !neighbors[c1] && !neighbors[c2] {
-            num_corners += 1;
-        } else if neighbors[c1] && neighbors[c2] && !neighbors[c3] {
+        if !neighbors[c1] && !neighbors[c2] || (neighbors[c1] && neighbors[c2] && !neighbors[c3]) {
             num_corners += 1;
         }
     }

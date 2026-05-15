@@ -81,7 +81,7 @@ fn next_space(
     }
 }
 
-fn find_trailheads(grid: &Vec<Vec<char>>) -> Vec<Trailhead> {
+fn find_trailheads(grid: &[Vec<char>]) -> Vec<Trailhead> {
     let (m, n) = (grid.len(), grid[0].len());
     let mut trailheads = Vec::new();
 
@@ -91,7 +91,7 @@ fn find_trailheads(grid: &Vec<Vec<char>>) -> Vec<Trailhead> {
                 let score = compute_score(grid, (i, j), (m, n));
                 trailheads.push(Trailhead {
                     start: (i, j),
-                    score: score as u32,
+                    score,
                 });
             }
         }
@@ -99,7 +99,7 @@ fn find_trailheads(grid: &Vec<Vec<char>>) -> Vec<Trailhead> {
     trailheads
 }
 
-fn find_trailhead_ratings(grid: &Vec<Vec<char>>) -> Vec<Trailhead> {
+fn find_trailhead_ratings(grid: &[Vec<char>]) -> Vec<Trailhead> {
     let (m, n) = (grid.len(), grid[0].len());
     let mut trailheads = Vec::new();
 
@@ -117,7 +117,7 @@ fn find_trailhead_ratings(grid: &Vec<Vec<char>>) -> Vec<Trailhead> {
     trailheads
 }
 
-fn compute_score(grid: &Vec<Vec<char>>, start: (usize, usize), boundary: (usize, usize)) -> u32 {
+fn compute_score(grid: &[Vec<char>], start: (usize, usize), boundary: (usize, usize)) -> u32 {
     let mut queue = VecDeque::new();
     queue.push_back((start, 0));
 
@@ -148,7 +148,7 @@ fn compute_score(grid: &Vec<Vec<char>>, start: (usize, usize), boundary: (usize,
     trailends.len() as u32
 }
 
-fn compute_rating(grid: &Vec<Vec<char>>, start: (usize, usize), boundary: (usize, usize)) -> usize {
+fn compute_rating(grid: &[Vec<char>], start: (usize, usize), boundary: (usize, usize)) -> usize {
     let mut queue = VecDeque::new();
     queue.push_back((start, 0));
 

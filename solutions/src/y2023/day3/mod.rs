@@ -95,7 +95,7 @@ struct Symbol {
     value: char,
 }
 
-fn compute_adj_coords(grid: &Vec<Vec<char>>) -> HashMap<Coordinate, Symbol> {
+fn compute_adj_coords(grid: &[Vec<char>]) -> HashMap<Coordinate, Symbol> {
     let mut coordinates = HashMap::new();
     for (row, chars) in grid.iter().enumerate() {
         for (col, ch) in chars.iter().enumerate() {

@@ -2,7 +2,6 @@ use crate::{AdventError, AdventProblem};
 use std::{
     cmp::Ordering,
     collections::{BinaryHeap, HashSet},
-    u32,
 };
 
 pub struct Day16;
@@ -56,18 +55,17 @@ impl PartialOrd for State {
     }
 }
 
-fn find_lowest_score(grid: &Vec<Vec<char>>) -> u32 {
+fn find_lowest_score(grid: &[Vec<char>]) -> u32 {
     let boundary = (grid.len(), grid[0].len());
     let mut start = (0, 0);
     let mut end = (0, 0);
 
-    for i in 0..boundary.0 {
-        for j in 0..boundary.1 {
-            if grid[i][j] == 'S' {
+    for (i, row) in grid.iter().enumerate() {
+        for (j, c) in row.iter().enumerate() {
+            if *c == 'S' {
                 start = (i, j);
-            } else if grid[i][j] == 'E' {
+            } else if *c == 'E' {
                 end = (i, j);
-            } else {
             }
         }
     }
@@ -130,18 +128,17 @@ fn find_lowest_score(grid: &Vec<Vec<char>>) -> u32 {
     u32::MAX
 }
 
-fn count_visited_paths(grid: &Vec<Vec<char>>) -> u32 {
+fn count_visited_paths(grid: &[Vec<char>]) -> u32 {
     let boundary = (grid.len(), grid[0].len());
     let mut start = (0, 0);
     let mut end = (0, 0);
 
-    for i in 0..boundary.0 {
-        for j in 0..boundary.1 {
-            if grid[i][j] == 'S' {
+    for (i, row) in grid.iter().enumerate() {
+        for (j, c) in row.iter().enumerate() {
+            if *c == 'S' {
                 start = (i, j);
-            } else if grid[i][j] == 'E' {
+            } else if *c == 'E' {
                 end = (i, j);
-            } else {
             }
         }
     }

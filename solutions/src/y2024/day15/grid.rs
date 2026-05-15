@@ -92,7 +92,7 @@ impl Grid {
                 Space::Robot => {
                     panic!("2nd robot detected on board");
                 }
-                Space::Wall => return,
+                Space::Wall => (),
             };
         }
     }
@@ -133,7 +133,7 @@ impl Grid {
                 Space::Robot => {
                     panic!("2nd robot detected on board");
                 }
-                Space::Wall => return,
+                Space::Wall => (),
             };
         }
     }

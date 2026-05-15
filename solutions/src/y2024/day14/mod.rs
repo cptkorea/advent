@@ -61,9 +61,9 @@ impl AdventProblem for Day14 {
             let mut line = String::new();
             for j in 0..GRID_HEIGHT {
                 if positions.contains(&(i, j)) {
-                    line.push_str("*");
+                    line.push('*');
                 } else {
-                    line.push_str(".");
+                    line.push('.');
                 }
             }
             println!("{}", line);

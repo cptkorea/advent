@@ -81,7 +81,7 @@ impl Computer {
     }
 
     fn bxl(&mut self, op: u64) {
-        self.registers.b = self.registers.b ^ op;
+        self.registers.b ^= op;
     }
 
     fn bst(&mut self, combo: u64) {
@@ -95,7 +95,7 @@ impl Computer {
     }
 
     fn bxc(&mut self, _: u64) {
-        self.registers.b = self.registers.b ^ self.registers.c;
+        self.registers.b ^= self.registers.c;
     }
 
     fn out(&mut self, combo: u64) {

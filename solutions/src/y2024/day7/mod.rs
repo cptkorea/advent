@@ -8,7 +8,7 @@ impl AdventProblem for Day7 {
     fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
         let total = lines
             .iter()
-            .map(|s| Calibration::from(s))
+            .map(Calibration::from)
             .filter(|c| c.can_finish())
             .map(|c| c.total)
             .sum::<u64>();
@@ -21,7 +21,7 @@ impl AdventProblem for Day7 {
     fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
         let total = lines
             .iter()
-            .map(|s| Calibration::from(s))
+            .map(Calibration::from)
             .filter(|c| c.can_finish_with_concatenate())
             .map(|c| c.total)
             .sum::<u64>();
@@ -88,7 +88,6 @@ where
 
         let parts = split.next().expect("missing calibartion parts")[1..]
             .split(" ")
-            .into_iter()
             .map(|s| s.parse::<u64>().expect("non-numeric calibration part"))
             .collect();
 

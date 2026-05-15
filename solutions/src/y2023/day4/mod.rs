@@ -40,7 +40,7 @@ impl AdventProblem for Day4 {
             for i in 1..=card.matches() {
                 buffer
                     .entry(card.id + i)
-                    .and_modify(|e| *e = *e + num_cards)
+                    .and_modify(|e| *e += num_cards)
                     .or_insert(2);
             }
         }

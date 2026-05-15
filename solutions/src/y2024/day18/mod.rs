@@ -1,5 +1,5 @@
 use crate::{AdventError, AdventProblem};
-use std::{cmp::Ordering, collections::BinaryHeap, u32};
+use std::{cmp::Ordering, collections::BinaryHeap};
 
 pub struct Day18;
 
@@ -13,8 +13,8 @@ impl AdventProblem for Day18 {
     fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
         let mut grid = parse_lines(&lines, 1024, (70, 70));
 
-        for k in 1025..lines.len() {
-            let mut split = lines[k].split(",");
+        for (k, part) in lines.iter().enumerate().skip(1025) {
+            let mut split = part.split(",");
             let j = split
                 .nth(0)
                 .unwrap()
@@ -39,26 +39,24 @@ impl AdventProblem for Day18 {
     }
 }
 
-fn parse_lines(lines: &Vec<String>, limit: usize, boundary: (usize, usize)) -> Vec<Vec<char>> {
+fn parse_lines(lines: &[String], limit: usize, boundary: (usize, usize)) -> Vec<Vec<char>> {
     let mut grid = Vec::new();
     for _ in 0..=boundary.0 {
         let mut row = Vec::new();
-        for _ in 0..=boundary.1 {
-            row.push('.');
-        }
+        row.extend(std::iter::repeat_n('.', boundary.1));
         grid.push(row);
     }
 
     let limit = usize::min(lines.len(), limit);
-    for i in 0..limit {
-        let mut split = lines[i].split(",");
+    for line in lines.iter().take(limit) {
+        let mut split = line.split(",");
         let j = split
-            .nth(0)
+            .next()
             .unwrap()
             .parse::<usize>()
             .expect("numeric value");
         let i = split
-            .nth(0)
+            .next()
             .unwrap()
             .parse::<usize>()
             .expect("numeric value");
@@ -102,7 +100,7 @@ pub enum Direction {
     Right,
 }
 
-fn find_lowest_score(grid: &Vec<Vec<char>>, end: (usize, usize)) -> u32 {
+fn find_lowest_score(grid: &[Vec<char>], end: (usize, usize)) -> u32 {
     let boundary = (end.0 + 1, end.1 + 1);
     let mut heap = BinaryHeap::new();
     heap.push(State {
@@ -113,9 +111,7 @@ fn find_lowest_score(grid: &Vec<Vec<char>>, end: (usize, usize)) -> u32 {
     let mut min_scores: Vec<Vec<u32>> = Vec::new();
     for _ in 0..boundary.0 {
         let mut row = Vec::new();
-        for _ in 0..boundary.1 {
-            row.push(u32::MAX);
-        }
+        row.extend(std::iter::repeat_n(u32::MAX, boundary.1));
         min_scores.push(row);
     }
     min_scores[0][0] = 0;

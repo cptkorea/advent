@@ -73,9 +73,7 @@ impl Request {
             if let Some(dependencies) = rules.get(&page) {
                 for j in (i + 1)..n {
                     if dependencies.contains(&self.pages[j]) {
-                        let tmp = self.pages[i];
-                        self.pages[i] = self.pages[j];
-                        self.pages[j] = tmp;
+                        self.pages.swap(i, j);
                         redo = true;
                         break;
                     }
@@ -92,7 +90,7 @@ impl Request {
 /**
  * Given ordering rule 47|53, map 53 -> 47 indicating that it must be printed after
  */
-fn parse_ordering_rules(lines: &Vec<String>) -> (HashMap<u32, HashSet<u32>>, usize) {
+fn parse_ordering_rules(lines: &[String]) -> (HashMap<u32, HashSet<u32>>, usize) {
     let mut i = 0;
     let mut rules: HashMap<u32, HashSet<u32>> = HashMap::new();
 
@@ -125,7 +123,7 @@ fn parse_ordering_rules(lines: &Vec<String>) -> (HashMap<u32, HashSet<u32>>, usi
 /**
  * Given ordering rule 47|53, map 53 -> 47 indicating that it must be printed after
  */
-fn parse_print_requests(lines: &Vec<String>, start: usize) -> Vec<Request> {
+fn parse_print_requests(lines: &[String], start: usize) -> Vec<Request> {
     let mut i = start;
     let mut requests = Vec::new();
 
@@ -137,7 +135,6 @@ fn parse_print_requests(lines: &Vec<String>, start: usize) -> Vec<Request> {
 
         let pages = line
             .split(",")
-            .into_iter()
             .map(|s| s.parse::<u32>().expect("non-numeric page in request"))
             .collect::<Vec<_>>();
 

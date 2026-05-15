@@ -19,7 +19,7 @@ impl AdventProblem for Day17 {
     }
 }
 
-fn parse_lines(lines: &Vec<String>) -> Computer {
+fn parse_lines(lines: &[String]) -> Computer {
     let a = lines[0]
         .split(": ")
         .nth(1)
@@ -46,7 +46,6 @@ fn parse_lines(lines: &Vec<String>) -> Computer {
         .nth(1)
         .unwrap()
         .split(",")
-        .into_iter()
         .map(|s| s.parse().expect("numeric opcode"))
         .collect::<Vec<u8>>();
 

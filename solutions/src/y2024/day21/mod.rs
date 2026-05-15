@@ -168,7 +168,8 @@ fn append_directions(pos: (usize, usize), next: (usize, usize), empty: (usize, u
         push_horizontal(&mut directions, pos, next);
         push_vertical(&mut directions, pos, next);
     }
-    return directions;
+
+    directions
 }
 
 /**
@@ -224,13 +225,11 @@ fn generate_directions(start: (usize, usize), end: (usize, usize)) -> Vec<String
             row_first.push('^');
         }
         directions.push(row_first);
-    } else if start.0 > end.0 {
-        if end.1 != 0 {
-            for _ in 0..(end.0 - start.0) {
-                row_first.push('v');
-            }
-            directions.push(row_first);
+    } else if start.0 > end.0 && end.1 != 0 {
+        for _ in 0..(end.0 - start.0) {
+            row_first.push('v');
         }
+        directions.push(row_first);
     }
 
     let mut col_first = String::new();
@@ -239,13 +238,11 @@ fn generate_directions(start: (usize, usize), end: (usize, usize)) -> Vec<String
             col_first.push('^');
         }
         directions.push(col_first);
-    } else if start.1 > end.1 {
-        if end.0 != 0 {
-            for _ in 0..(end.1 - start.1) {
-                col_first.push('v');
-            }
-            directions.push(col_first);
+    } else if start.1 > end.1 && end.0 != 0 {
+        for _ in 0..(end.1 - start.1) {
+            col_first.push('v');
         }
+        directions.push(col_first);
     }
     directions
 }

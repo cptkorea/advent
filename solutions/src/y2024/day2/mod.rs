@@ -22,12 +22,11 @@ impl AdventProblem for Day2 {
 
 fn parse_numbers(s: &str) -> Vec<u32> {
     let parts = s.split_whitespace();
-    let numbers = parts
+
+    parts
         .into_iter()
         .map(|p| p.parse::<u32>().expect("numeric sample"))
-        .collect::<Vec<_>>();
-
-    numbers
+        .collect::<Vec<_>>()
 }
 
 fn is_safe_sequence(sequence: Vec<u32>) -> bool {
