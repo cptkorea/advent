@@ -1,9 +1,7 @@
 [workspace]
 resolver = "2"
 
-members = ["advent-common",
-    "y2023"
-, "y2024", "y2025"]
+members = ["advent-common", "solutions"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
