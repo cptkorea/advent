@@ -1,6 +1,7 @@
 use std::borrow::Cow;
 use std::fs::File;
 use std::io::{self, BufRead};
+use std::num::ParseIntError;
 use std::path::PathBuf;
 use thiserror::Error;
 
@@ -25,6 +26,12 @@ pub enum AdventError {
     InputParseError(Cow<'static, str>),
     #[error("unknown error")]
     UnknownError,
+}
+
+impl From<ParseIntError> for AdventError {
+    fn from(err: ParseIntError) -> Self {
+        Self::InputParseError(err.to_string().into())
+    }
 }
 
 #[macro_export]
