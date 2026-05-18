@@ -13,6 +13,7 @@ use thiserror::Error;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum PuzzleAnswer {
+    USIZE(usize),
     U32(u32),
     U64(u64),
     Str(String),
@@ -21,6 +22,7 @@ pub enum PuzzleAnswer {
 impl fmt::Display for PuzzleAnswer {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
+            PuzzleAnswer::USIZE(u) => write!(f, "{u}"),
             PuzzleAnswer::U32(v) => write!(f, "{v}"),
             PuzzleAnswer::U64(v) => write!(f, "{v}"),
             PuzzleAnswer::Str(s) => write!(f, "{s}"),
@@ -43,6 +45,12 @@ impl From<u64> for PuzzleAnswer {
 impl From<String> for PuzzleAnswer {
     fn from(s: String) -> Self {
         Self::Str(s)
+    }
+}
+
+impl From<usize> for PuzzleAnswer {
+    fn from(u: usize) -> Self {
+        Self::USIZE(u)
     }
 }
 
@@ -128,5 +136,6 @@ macro_rules! define_advent_registry {
     };
 }
 
+pub mod floodfill;
 pub mod number;
 pub mod rotation;
