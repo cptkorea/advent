@@ -39,15 +39,18 @@ impl From<ParseIntError> for AdventError {
     }
 }
 
-/// Reads puzzle lines from `{inputs_root}/inputs/y{year}/day{date}.txt`.
+/// Reads puzzle lines from `{crate_root}/src/y{year}/inputs/day{date}.txt`.
+///
+/// Pass the solving crate root (typically `PathBuf::from(env!("CARGO_MANIFEST_DIR"))` from `solutions`).
 pub fn read_input_lines(
-    inputs_root: impl AsRef<std::path::Path>,
+    crate_root: impl AsRef<std::path::Path>,
     year: u32,
     date: u8,
 ) -> Result<Vec<String>, AdventError> {
-    let path = PathBuf::from(inputs_root.as_ref())
-        .join("inputs")
+    let path = PathBuf::from(crate_root.as_ref())
+        .join("src")
         .join(format!("y{}", year))
+        .join("inputs")
         .join(format!("day{}.txt", date));
     let mut lines = Vec::new();
     let file = File::open(path)?;
