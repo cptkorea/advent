@@ -4,7 +4,8 @@ use std::collections::HashMap;
 pub struct Day3;
 
 impl AdventProblem for Day3 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let grid: Vec<Vec<char>> = lines.into_iter().map(|s| s.chars().collect()).collect();
         let num_cols = grid[0].len();
         let adj_coords = compute_adj_coords(&grid);
@@ -38,7 +39,7 @@ impl AdventProblem for Day3 {
         Ok(total)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let grid: Vec<Vec<char>> = lines.into_iter().map(|s| s.chars().collect()).collect();
         let num_cols = grid[0].len();
         let adj_coords = compute_adj_coords(&grid);

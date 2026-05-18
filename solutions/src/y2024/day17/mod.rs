@@ -6,14 +6,15 @@ mod computer;
 pub struct Day17;
 
 impl AdventProblem for Day17 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let mut computer = parse_lines(&lines);
         computer.run();
         println!("{:?}", computer.outputs().iter());
         Ok(0)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         println!("lines={lines:?}");
         Ok(0)
     }

@@ -3,12 +3,13 @@ use crate::{AdventError, AdventProblem};
 pub struct Day3;
 
 impl AdventProblem for Day3 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let total = lines.iter().map(|s| parse_multiplications(s)).sum();
         Ok(total)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let mut switch = true;
         let mut total = 0;
 

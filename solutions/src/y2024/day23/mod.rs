@@ -4,7 +4,8 @@ use std::collections::{HashMap, HashSet};
 pub struct Day23;
 
 impl AdventProblem for Day23 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let neighbors = build_neighbors(&lines);
         let mut triplets = HashSet::new();
 
@@ -32,7 +33,7 @@ impl AdventProblem for Day23 {
         Ok(total)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let adjacency = build_neighbors(&lines);
 
         let mut biggest = Vec::new();

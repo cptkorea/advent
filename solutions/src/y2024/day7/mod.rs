@@ -5,7 +5,8 @@ use crate::{AdventError, AdventProblem};
 pub struct Day7;
 
 impl AdventProblem for Day7 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let total = lines
             .iter()
             .map(Calibration::from)
@@ -18,7 +19,7 @@ impl AdventProblem for Day7 {
         Ok(0)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let total = lines
             .iter()
             .map(Calibration::from)

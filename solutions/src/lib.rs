@@ -1,7 +1,7 @@
 use std::borrow::Cow;
 use std::path::PathBuf;
 
-pub use advent_common::{AdventError, AdventProblem};
+pub use advent_common::{AdventError, AdventProblem, PuzzleAnswer};
 
 #[macro_export]
 macro_rules! regex {
@@ -17,12 +17,9 @@ pub mod y2023;
 pub mod y2024;
 pub mod y2025;
 
-pub fn run(year: u32, date: u8, part: u8) -> Result<u32, AdventError> {
-    let lines = advent_common::read_input_lines(
-        PathBuf::from(env!("CARGO_MANIFEST_DIR")),
-        year,
-        date,
-    )?;
+pub fn run(year: u32, date: u8, part: u8) -> Result<PuzzleAnswer, AdventError> {
+    let lines =
+        advent_common::read_input_lines(PathBuf::from(env!("CARGO_MANIFEST_DIR")), year, date)?;
     match year {
         2023 => y2023::run_with_lines(lines, date, part),
         2024 => y2024::run_with_lines(lines, date, part),

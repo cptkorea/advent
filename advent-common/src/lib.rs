@@ -1,23 +1,61 @@
 //! Shared helpers for Advent of Code workspace crates.
 //!
-//! Each day module must expose `pub struct DayN` adjacent to the invocation (e.g.
+//! Each day module must expose `pub struct DayN` adjacent to [`define_advent_registry`] (e.g.
 //! `crate::y2024::day23::Day23`). The invoking crate must depend on the `paste` crate.
 
 use std::borrow::Cow;
+use std::fmt;
 use std::fs::File;
 use std::io::{self, BufRead};
 use std::num::ParseIntError;
 use std::path::PathBuf;
 use thiserror::Error;
 
-pub trait AdventProblem {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError>;
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError>;
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum PuzzleAnswer {
+    U32(u32),
+    U64(u64),
+    Str(String),
+}
 
-    fn run(&self, lines: Vec<String>, part: u8) -> Result<u32, AdventError> {
+impl fmt::Display for PuzzleAnswer {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            PuzzleAnswer::U32(v) => write!(f, "{v}"),
+            PuzzleAnswer::U64(v) => write!(f, "{v}"),
+            PuzzleAnswer::Str(s) => write!(f, "{s}"),
+        }
+    }
+}
+
+impl From<u32> for PuzzleAnswer {
+    fn from(v: u32) -> Self {
+        Self::U32(v)
+    }
+}
+
+impl From<u64> for PuzzleAnswer {
+    fn from(v: u64) -> Self {
+        Self::U64(v)
+    }
+}
+
+impl From<String> for PuzzleAnswer {
+    fn from(s: String) -> Self {
+        Self::Str(s)
+    }
+}
+
+pub trait AdventProblem {
+    type Answer: Into<PuzzleAnswer>;
+
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError>;
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError>;
+
+    fn run(&self, lines: Vec<String>, part: u8) -> Result<PuzzleAnswer, AdventError> {
         match part {
-            1 => self.run_part_1(lines),
-            2 => self.run_part_2(lines),
+            1 => self.run_part_1(lines).map(Into::into),
+            2 => self.run_part_2(lines).map(Into::into),
             _ => unimplemented!("part {}", part),
         }
     }
@@ -69,12 +107,20 @@ macro_rules! define_advent_registry {
             }
         )*
 
-        pub fn factory(date: u8) -> ::std::boxed::Box<dyn $crate::AdventProblem> {
+        pub(crate) fn run_registered_day(
+            lines: ::std::vec::Vec<::std::string::String>,
+            date: u8,
+            part: u8,
+        ) -> ::std::result::Result<$crate::PuzzleAnswer, $crate::AdventError> {
             match date {
                 $(
-                    $day => ::std::boxed::Box::new(::paste::paste! {
-                        [<day $day>]::[<Day $day>]
-                    }),
+                    $day => ::paste::paste! {
+                        <[<day $day>]::[<Day $day>] as $crate::AdventProblem>::run(
+                            &[<day $day>]::[<Day $day>],
+                            lines,
+                            part,
+                        )
+                    },
                 )*
                 _ => ::core::unimplemented!(),
             }

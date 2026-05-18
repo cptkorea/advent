@@ -7,7 +7,8 @@ use std::{
 pub struct Day20;
 
 impl AdventProblem for Day20 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let grid = lines
             .iter()
             .map(|s| s.chars().collect())
@@ -19,7 +20,7 @@ impl AdventProblem for Day20 {
         Ok(num_shortcuts)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let grid = lines
             .iter()
             .map(|s| s.chars().collect())

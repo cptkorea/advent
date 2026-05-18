@@ -4,7 +4,8 @@ use std::collections::VecDeque;
 pub struct Day10;
 
 impl AdventProblem for Day10 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let grid = lines
             .iter()
             .map(|s| s.chars().collect())
@@ -15,7 +16,7 @@ impl AdventProblem for Day10 {
         Ok(total)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let grid = lines
             .iter()
             .map(|s| s.chars().collect())

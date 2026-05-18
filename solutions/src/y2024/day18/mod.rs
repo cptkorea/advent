@@ -4,13 +4,14 @@ use std::{cmp::Ordering, collections::BinaryHeap};
 pub struct Day18;
 
 impl AdventProblem for Day18 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let grid = parse_lines(&lines, 1024, (70, 70));
         let score = find_lowest_score(&grid, (70, 70));
         Ok(score)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let mut grid = parse_lines(&lines, 1024, (70, 70));
 
         for (k, part) in lines.iter().enumerate().skip(1025) {

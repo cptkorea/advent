@@ -3,7 +3,8 @@ use crate::{AdventError, AdventProblem};
 pub struct Day9;
 
 impl AdventProblem for Day9 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let mut d = DiskMap::from(lines[0].as_str());
         d.move_blocks();
 
@@ -11,7 +12,7 @@ impl AdventProblem for Day9 {
         Ok(0)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let mut d = CompressedDiskMap::from(lines[0].as_str());
         d.move_blocks();
         println!("checksum={:?}", d.checksum());
