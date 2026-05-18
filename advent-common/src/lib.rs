@@ -30,4 +30,5 @@ macro_rules! define_advent_registry {
     };
 }
 
+pub mod number;
 pub mod rotation;
