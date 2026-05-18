@@ -4,7 +4,7 @@ pub struct Day3;
 
 impl AdventProblem for Day3 {
     fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
-        let res = lines
+        let _res = lines
             .iter()
             .map(|s| find_max_joltage(s.as_str(), 2))
             .fold(0, |t, s| t + s);

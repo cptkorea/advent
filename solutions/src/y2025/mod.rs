@@ -1,4 +1,4 @@
-use super::{AdventError, AdventProblem};
+use super::AdventError;
 
 advent_common::define_advent_registry!(1, 2, 3);
 
