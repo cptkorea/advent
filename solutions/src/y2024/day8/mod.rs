@@ -5,7 +5,8 @@ use std::collections::{HashMap, HashSet};
 pub struct Day8;
 
 impl AdventProblem for Day8 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let grid = lines
             .iter()
             .map(|s| s.chars().collect::<Vec<_>>())
@@ -22,7 +23,7 @@ impl AdventProblem for Day8 {
         Ok(all_antinode_coords.len() as u32)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let grid = lines
             .iter()
             .map(|s| s.chars().collect::<Vec<_>>())

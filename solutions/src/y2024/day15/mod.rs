@@ -6,7 +6,8 @@ mod grid;
 pub struct Day15;
 
 impl AdventProblem for Day15 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let (mut grid, i) = parse_grid(&lines);
         let directions = parse_directions(&lines, i + 1);
 
@@ -29,7 +30,7 @@ impl AdventProblem for Day15 {
         Ok(total as u32)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let (mut grid, i) = parse_wide_grid(&lines);
         let directions = parse_directions(&lines, i + 1);
 

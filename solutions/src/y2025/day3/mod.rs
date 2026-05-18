@@ -3,24 +3,23 @@ use crate::{AdventError, AdventProblem};
 pub struct Day3;
 
 impl AdventProblem for Day3 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u64;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let res = lines
             .iter()
             .map(|s| find_max_joltage(s.as_str(), 2))
             .fold(0, |t, s| t + s);
 
-        Ok(0)
-        // Ok(res)
+        Ok(res)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let res = lines
             .iter()
             .map(|s| find_max_joltage(s.as_str(), 12))
             .fold(0, |t, s| t + s);
 
-        println!("res={res}");
-        Ok(0)
+        Ok(res)
     }
 }
 
@@ -51,21 +50,6 @@ fn find_max_joltage(s: &str, pick: usize) -> u64 {
     }
 
     first
-
-    // let second = chars[n - 1].to_digit(10).expect("not a digit");
-
-    // let (mut l, mut r) = (0, n - 1);
-
-    // while l < r {
-    //     if chars[l] > chars[r] {
-
-    //     }
-
-    //     l -= 1;
-    //     r += 1;
-    // }
-
-    // first * 10 + second;
 }
 
 #[cfg(test)]

@@ -3,7 +3,8 @@ use crate::{AdventError, AdventProblem};
 pub struct Day13;
 
 impl AdventProblem for Day13 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let games = parse_lines(&lines, 0);
         let total = games
             .iter()
@@ -17,7 +18,7 @@ impl AdventProblem for Day13 {
         Ok(0)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let games = parse_lines(&lines, 10000000000000);
         let total = games
             .iter()

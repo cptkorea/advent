@@ -7,12 +7,13 @@ const NUMBERS: [&str; 9] = [
 pub struct Day1;
 
 impl AdventProblem for Day1 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let total = lines.iter().map(|s| calibration_value(s)).sum();
         Ok(total)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let total = lines.iter().map(|s| alpha_calibration_value(s)).sum();
         Ok(total)
     }

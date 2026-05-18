@@ -4,7 +4,8 @@ use std::collections::HashMap;
 pub struct Day11;
 
 impl AdventProblem for Day11 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let mut nums = lines[0]
             .split(" ")
             .map(|n| n.parse().expect("numeric value"))
@@ -21,7 +22,7 @@ impl AdventProblem for Day11 {
         Ok(nums.len() as u32)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let mut stone_counts: HashMap<u64, usize> = lines[0]
             .split(" ")
             .map(|n| n.parse().expect("numeric value"))

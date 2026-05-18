@@ -12,7 +12,8 @@ macro_rules! regex {
 pub struct Day2;
 
 impl AdventProblem for Day2 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let total = lines
             .iter()
             .map(|s| Game::try_from(s.as_str()).expect("unable to parse game"))
@@ -21,7 +22,7 @@ impl AdventProblem for Day2 {
         Ok(total)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let total = lines
             .iter()
             .map(|s| Game::try_from(s.as_str()).unwrap())

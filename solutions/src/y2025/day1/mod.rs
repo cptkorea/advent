@@ -43,7 +43,9 @@ pub struct Day1;
 const NUM_DIALS: usize = 100;
 
 impl AdventProblem for Day1 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let mut pos = 50;
         let mut cnt = 0;
 
@@ -69,7 +71,7 @@ impl AdventProblem for Day1 {
         Ok(cnt as u32)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let mut pos = 50;
         let mut cnt = 0;
 

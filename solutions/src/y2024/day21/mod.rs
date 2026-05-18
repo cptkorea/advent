@@ -4,7 +4,8 @@ use std::collections::HashMap;
 pub struct Day21;
 
 impl AdventProblem for Day21 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let mut total = 0;
         for line in &lines {
             let dirs = robot_dirs(line);
@@ -16,7 +17,7 @@ impl AdventProblem for Day21 {
         Ok(total)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let mut total = 0;
         for line in &lines {
             let dirs = cached_robot_dirs(line);

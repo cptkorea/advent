@@ -13,7 +13,8 @@ macro_rules! regex {
 pub struct Day4;
 
 impl AdventProblem for Day4 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let total = lines
             .iter()
             .map(|s| ScratchCard::from(s.as_str()).score())
@@ -21,7 +22,7 @@ impl AdventProblem for Day4 {
         Ok(total)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let cards = lines
             .iter()
             .map(|s| ScratchCard::from(s.as_str()))

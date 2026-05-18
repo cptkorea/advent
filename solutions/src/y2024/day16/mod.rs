@@ -7,7 +7,8 @@ use std::{
 pub struct Day16;
 
 impl AdventProblem for Day16 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let grid = lines
             .iter()
             .map(|s| s.chars().collect())
@@ -17,7 +18,7 @@ impl AdventProblem for Day16 {
         Ok(min_score)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let grid = lines
             .iter()
             .map(|s| s.chars().collect())

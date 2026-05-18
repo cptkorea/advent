@@ -5,7 +5,8 @@ use crate::{AdventError, AdventProblem};
 pub struct Day5;
 
 impl AdventProblem for Day5 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let (rules, i) = parse_ordering_rules(&lines);
         let requests = parse_print_requests(&lines, i + 1);
 
@@ -18,7 +19,7 @@ impl AdventProblem for Day5 {
         Ok(total)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let (rules, i) = parse_ordering_rules(&lines);
         let mut requests = parse_print_requests(&lines, i + 1);
 

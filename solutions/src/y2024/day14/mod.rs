@@ -4,7 +4,8 @@ use std::collections::{HashMap, HashSet};
 pub struct Day14;
 
 impl AdventProblem for Day14 {
-    fn run_part_1(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    type Answer = u32;
+    fn run_part_1(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let total = lines
             .iter()
             .map(|s| {
@@ -24,7 +25,7 @@ impl AdventProblem for Day14 {
         Ok(total)
     }
 
-    fn run_part_2(&self, lines: Vec<String>) -> Result<u32, AdventError> {
+    fn run_part_2(&self, lines: Vec<String>) -> Result<Self::Answer, AdventError> {
         let mut robots = lines.iter().map(|s| parse_line(s)).collect::<Vec<_>>();
 
         for iter in 1..=10000 {
