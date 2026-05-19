@@ -136,6 +136,7 @@ macro_rules! define_advent_registry {
     };
 }
 
+pub mod arithmetic;
 pub mod floodfill;
 pub mod number;
 pub mod range;
