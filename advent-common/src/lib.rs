@@ -138,4 +138,5 @@ macro_rules! define_advent_registry {
 
 pub mod floodfill;
 pub mod number;
+pub mod range;
 pub mod rotation;
