@@ -31,7 +31,7 @@ impl<'a> TryFrom<&'a str> for Operator {
         let c = value
             .chars()
             .next()
-            .ok_or(AdventError::InputParseError(format!("not a char").into()))?;
+            .ok_or(AdventError::InputParseError("not a char".into()))?;
         Operator::try_from(c)
     }
 }
