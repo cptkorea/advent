@@ -1,6 +1,6 @@
 use crate::AdventError;
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, Eq, Hash, PartialEq)]
 pub enum Operator {
     Add,
     Subtract,
