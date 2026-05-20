@@ -1,3 +1,5 @@
+use std::str::FromStr;
+
 use crate::AdventError;
 
 pub fn num_digits(mut n: u32) -> u32 {
@@ -12,6 +14,52 @@ pub fn num_digits(mut n: u32) -> u32 {
     }
 
     cnt
+}
+
+#[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
+pub struct Pair<K, V> {
+    pub first: K,
+    pub second: V,
+}
+
+impl<K, V> Pair<K, V> {
+    pub fn new(f: K, s: V) -> Self {
+        Self {
+            first: f,
+            second: s,
+        }
+    }
+}
+
+impl<K: FromStr, V: FromStr> TryFrom<&str> for Pair<K, V> {
+    type Error = AdventError;
+
+    fn try_from(s: &str) -> Result<Self, Self::Error> {
+        let mut parts = s.split(',');
+        let first = parts
+            .next()
+            .filter(|&f| !f.is_empty())
+            .ok_or_else(|| AdventError::InputParseError("triple: missing first component".into()))?
+            .parse::<K>()
+            .map_err(|e| {
+                AdventError::InputParseError("unable to parse first argument from string".into())
+            })?;
+        let second = parts
+            .next()
+            .filter(|&s| !s.is_empty())
+            .ok_or_else(|| AdventError::InputParseError("triple: missing second component".into()))?
+            .parse::<V>()
+            .map_err(|e| {
+                AdventError::InputParseError("unable to parse second argument from string".into())
+            })?;
+
+        if parts.next().is_some() {
+            return Err(AdventError::InputParseError(
+                "triple: expected exactly three comma-separated numbers".into(),
+            ));
+        }
+        Ok(Self { first, second })
+    }
 }
 
 #[derive(Debug, Clone, Copy)]
