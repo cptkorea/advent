@@ -141,3 +141,4 @@ pub mod floodfill;
 pub mod number;
 pub mod range;
 pub mod rotation;
+pub mod ufind;
