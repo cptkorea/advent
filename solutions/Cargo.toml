@@ -6,5 +6,7 @@ edition = "2021"
 [dependencies]
 advent-common = { path = "../advent-common" }
 clap = { workspace = true }
+good_lp = { version = "1.15.1", default-features = false, features = ["microlp"] }
+# microlp is pure Rust and needs no system CBC; coin_cbc links -lCbcSolver (Homebrew/install).
 paste = { workspace = true }
 regex = { workspace = true }
