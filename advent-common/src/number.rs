@@ -16,6 +16,33 @@ pub fn num_digits(mut n: u32) -> u32 {
     cnt
 }
 
+#[derive(Debug, Clone, Eq, PartialEq, Hash)]
+pub struct NumSequence<T> {
+    pub nums: Vec<T>,
+}
+
+const START_CHAR: [&str; 3] = ["(", "{", "["];
+
+impl<T: FromStr> TryFrom<&str> for NumSequence<T> {
+    type Error = AdventError;
+
+    fn try_from(s: &str) -> Result<Self, Self::Error> {
+        let seq = if START_CHAR.contains(&&s[0..1]) {
+            &s[1..s.len() - 1]
+        } else {
+            s
+        };
+
+        let parts = seq
+            .split(',')
+            .map(|n| n.parse::<T>())
+            .collect::<Result<Vec<_>, <T as FromStr>::Err>>()
+            .map_err(|_| AdventError::InputParseError("unable to parse string input".into()))?;
+
+        Ok(Self { nums: parts })
+    }
+}
+
 #[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
 pub struct Pair<K, V> {
     pub first: K,
@@ -41,7 +68,7 @@ impl<K: FromStr, V: FromStr> TryFrom<&str> for Pair<K, V> {
             .filter(|&f| !f.is_empty())
             .ok_or_else(|| AdventError::InputParseError("triple: missing first component".into()))?
             .parse::<K>()
-            .map_err(|e| {
+            .map_err(|_| {
                 AdventError::InputParseError("unable to parse first argument from string".into())
             })?;
         let second = parts
@@ -49,7 +76,7 @@ impl<K: FromStr, V: FromStr> TryFrom<&str> for Pair<K, V> {
             .filter(|&s| !s.is_empty())
             .ok_or_else(|| AdventError::InputParseError("triple: missing second component".into()))?
             .parse::<V>()
-            .map_err(|e| {
+            .map_err(|_| {
                 AdventError::InputParseError("unable to parse second argument from string".into())
             })?;
 
